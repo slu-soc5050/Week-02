@@ -1,0 +1,229 @@
+--------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/prenercg/Documents/Working/Week-02-Examples/week-02-stataCom
+> mands.txt
+  log type:  text
+ opened on:  29 Aug 2016, 11:00:30
+
+. 
+. // ==========================================================================
+. 
+. /*
+> file name - week-02-stataCommands.do
+> 
+> project name - SOC5050 - Quantitative Analysis - Spring 2016
+> 
+> purpose - Illustrate Week 02's commands
+> 
+> created - 29 Aug 2016
+> 
+> updated - 29 Aug 2016
+> 
+> author - CHRIS
+> */
+. 
+. // ==========================================================================
+. 
+. /*
+> full description -
+> This do-file illustrates most of the commands for Week 02. Opening
+> new datasets is omitted from this example.
+> */
+. 
+. /*
+> updates -
+> none
+> */
+. 
+. // ==========================================================================
+. /*
+> superordinates  -
+> - auto.dta (pre-installed with Stata)
+> */
+. 
+. /*
+> subordinates -
+> - none
+> */
+. 
+. // ==========================================================================
+. // ==========================================================================
+. // ==========================================================================
+. 
+. // 1. Opening Datasets
+. 
+. // 1a. Opening datasets
+. 
+. // use 34434-0001-Data.dta
+. 
+. // working example omitted
+. 
+. // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+. 
+. // 1b. Opening pre-installed data
+. 
+. sysuse auto.dta
+(1978 Automobile Data)
+
+. 
+. // ==========================================================================
+. 
+. // 2. Descriptive statistics: Mode
+. 
+. tabulate mpg, sort
+
+    Mileage |
+      (mpg) |      Freq.     Percent        Cum.
+------------+-----------------------------------
+         18 |          9       12.16       12.16
+         19 |          8       10.81       22.97
+         14 |          6        8.11       31.08
+         21 |          5        6.76       37.84
+         22 |          5        6.76       44.59
+         25 |          5        6.76       51.35
+         16 |          4        5.41       56.76
+         17 |          4        5.41       62.16
+         24 |          4        5.41       67.57
+         20 |          3        4.05       71.62
+         23 |          3        4.05       75.68
+         26 |          3        4.05       79.73
+         28 |          3        4.05       83.78
+         12 |          2        2.70       86.49
+         15 |          2        2.70       89.19
+         30 |          2        2.70       91.89
+         35 |          2        2.70       94.59
+         29 |          1        1.35       95.95
+         31 |          1        1.35       97.30
+         34 |          1        1.35       98.65
+         41 |          1        1.35      100.00
+------------+-----------------------------------
+      Total |         74      100.00
+
+. 
+. // ==========================================================================
+. 
+. // 3. Descriptive statistics: Deatiled summary
+. 
+. summarize mpg, detail
+
+                        Mileage (mpg)
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%           12             12
+ 5%           14             12
+10%           14             14       Obs                  74
+25%           18             14       Sum of Wgt.          74
+
+50%           20                      Mean            21.2973
+                        Largest       Std. Dev.      5.785503
+75%           25             34
+90%           29             35       Variance       33.47205
+95%           34             35       Skewness       .9487176
+99%           41             41       Kurtosis       3.975005
+
+. 
+. // ==========================================================================
+. 
+. // 4. Descriptive statistics: specific values
+. 
+. tabstat mpg, statistics(range iqr)
+
+    variable |     range       iqr
+-------------+--------------------
+         mpg |        29         7
+----------------------------------
+
+. 
+. // ==========================================================================
+. 
+. // 5. Bar charts
+. 
+. // 5a. Regular bar chart
+. 
+. graph bar (count), over(rep78) ///
+>   scheme(s2mono) ///
+>   title("Repair Record") ///
+>   subtitle("1978 Vehicles") ///
+>   note("Produced by Christopher Prener, Ph.D.; Data via Stata")
+
+. 
+. graph export "Plots/fig1.png", width(800) height(600) replace
+(file Plots/fig1.png written in PNG format)
+
+. 
+. // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+. 
+. // 5b. Horizontal bar chart
+. 
+. graph hbar (count), over(rep78) ///
+>   scheme(s2mono) ///
+>   title("Repair Record") ///
+>   subtitle("1978 Vehicles") ///
+>   note("Produced by Christopher Prener, Ph.D.; Data via Stata")
+
+. 
+. graph export "Plots/fig2.png", width(800) height(600) replace
+(file Plots/fig2.png written in PNG format)
+
+. 
+. // ==========================================================================
+. 
+. // 6. Histogram with Altered Bins
+. 
+. histogram mpg, frequency bin(12) ///
+>   scheme(s2mono) ///
+>   title("Miles per Gallon") ///
+>   subtitle("1978 Vehicles") ///
+>   note("Produced by Christopher Prener, Ph.D.; Data via Stata")
+(bin=12, start=12, width=2.4166667)
+
+. 
+. graph export "Plots/fig3.png", width(800) height(600) replace
+(file Plots/fig3.png written in PNG format)
+
+. 
+. // ==========================================================================
+. 
+. // 7. Box Plots
+. 
+. // 7a. Regular box plot
+. 
+. graph box mpg, ///
+>   scheme(s2mono) ///
+>   title("Miles per Gallon") ///
+>   subtitle("1978 Vehicles") ///
+>   note("Produced by Christopher Prener, Ph.D.; Data via Stata")
+
+. 
+. graph export "Plots/fig4.png", width(800) height(600) replace
+(file Plots/fig4.png written in PNG format)
+
+. 
+. // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+. 
+. // 7b. Horizontal box plot
+. 
+. graph hbox mpg, ///
+>   scheme(s2mono) ///
+>   title("Miles per Gallon") ///
+>   subtitle("1978 Vehicles") ///
+>   note("Produced by Christopher Prener, Ph.D.; Data via Stata")
+
+. 
+. graph export "Plots/fig5.png", width(800) height(600) replace
+(file Plots/fig5.png written in PNG format)
+
+. 
+. // ==========================================================================
+. // ==========================================================================
+. // ==========================================================================
+. 
+. // standard closing options
+. 
+. log close _all
+      name:  <unnamed>
+       log:  /Users/prenercg/Documents/Working/Week-02-Examples/week-02-stataCom
+> mands.txt
+  log type:  text
+ closed on:  29 Aug 2016, 11:00:37
+--------------------------------------------------------------------------------
