@@ -3,12 +3,22 @@
 ### Repository Contents
 This repository contains files for:
   - Commands
+    - Plots
+      - fig1.png
+      - fig2.png
+      - fig3.png
+      - fig4.png
+      - fig5.png
+    - week-02-stataCommands.do
+    - week-02-stataCommands.txt
     - week-02-stataQuickref.pdf
-  - MarkDoc
-    - week-02-markdocQuickRef.pdf
-  - Markdown
-    - week-02-markdownQuickRef.md
-    - week-02-markdownQuickRef.pdf
+  - Equations
+    - week-02-equations.pdf
+    - week-02-equationsByHand.pdf
+    - week-02-equationsExcel.xlsx
+  - Lab
+    - lab-02.do
+    - lab-02.pdf
   - Slides
     - week-02-slides.pdf
   - LICENSE_CODE.md
