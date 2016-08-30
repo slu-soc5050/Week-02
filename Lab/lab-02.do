@@ -28,7 +28,7 @@ else if "`c(os)'" == "Windows" {
 
 // check to see if source data exists
 
-global sourceData 34434-001-Data.dta
+global sourceData 34434-0001-Data.dta
 capture confirm file $sourceData
 
 if _rc==601 {
