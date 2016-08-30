@@ -40,9 +40,11 @@ if _rc==601 {
 
 // check to see if appropriate directories exists
 
-global rootDir "Lab-02-Modified"
+global rootDir "Lab-02-Replication"
 capture mkdir $rootDir
 cd $rootDir
+
+capture mkdir "Plots"
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
