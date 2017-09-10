@@ -2,6 +2,7 @@
 
 ### Repository Contents
 This repository contains files for:
+  - `Functions/` - function quick reference sheets for all lectures
   - `Slides/` - slides for all lectures
   - `.gitignore`
   - `LICENSE_CODE.md`
