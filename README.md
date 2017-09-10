@@ -2,6 +2,7 @@
 
 ### Repository Contents
 This repository contains files for:
+  - `Slides/` - slides for all lectures
   - `.gitignore`
   - `LICENSE_CODE.md`
   - `LICENSE_TEXT.md`
