@@ -1,0 +1,78 @@
+---
+title: "Week 02 Sample Notebook"
+output: html_notebook
+---
+
+## Introduction
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file).
+
+## Dependencies
+
+The examples from week two require two packages - `dplyr` and `ggplot2`. These can be loaded individually or collectively as part of the `tidyverse` package. 
+
+To execute this code, click on the green right-facing arrow ("play button") on the right side of the gray code chunk below:
+
+```{r}
+library(tidyverse)
+```
+
+## Example of Piped Code
+
+One of the concepts that was introduced this week was the idea of piping code to make it more readable. Pipes come from the [`magrittr`](http://magrittr.tidyverse.org) package, which is installed as part of the `tidyverse`. You do not need to explicitly load `magrittr` - it is automatically loaded as a dependency of `dplyr`.
+
+### Example 1 - Creating a New Data Frame
+
+This is an example of a simple pipe of code to create a limited data frame from `ggplot2`'s `mpg` data set that is saved to the object `japaneseAutos`:
+
+```{r}
+mpg %>%
+  select(manufacturer,model, cty, hwy) %>%
+  rename(cityMpg = cty) %>%
+  rename(hwyMpg = hwy) %>% 
+  filter(manufacturer == "honda" | manufacturer == "nissan" | manufacturer == "subaru" | manufacturer == "toyota") %>%
+  mutate(avgMpg = (cityMpg+hwyMpg)/2) %>%
+  arrange(avgMpg) -> japaneseAutos
+```
+
+### Example 2 - Plotting Some Data Without Permanent Changes
+
+One advantage of using pipes is that we can make temporary modifications to our data without changing the underlying data frame itself. This is particularly helpful if we want to subset our data for plotting purposes.
+
+```{r}
+mpg %>%
+  select(manufacturer,model, cty, hwy) %>%
+  mutate(japan = ifelse(manufacturer == "honda" | manufacturer == "nissan" | 
+                          manufacturer == "subaru" | manufacturer == "toyota", TRUE, FALSE)) %>%
+  mutate(avgMpg = (cty+hwy)/2) %>%
+  ggplot() +
+    geom_histogram(mapping = aes(avgMpg)) +
+    facet_grid(~ japan)
+```
+
+This example adds some complexity to our use of `ggplot2`. One piece we skipped in the lectures, and will cover later in the semester, is faceting. Faceting is great for subdividing continuous distributions by discrete categories to detect different patterns. In this case, Japanese cars have a different distribution of average fuel efficiency. We are able to see that by faceting. 
+
+## Other Markdown Synatx Examples
+
+If you look above, you can see examples of how we use headings (think of Examples 1 and 2 as specific questions on an assignment). You can also see examples of italicized and typewriter text as well as html hyperlinks. **This is what bold** text looks like.
+
+### Lists
+There are a number of ways to format lists. You can use asterisks:
+
+* item 1
+* item 2
+* item 3
+
+You can also use dashes:
+
+- item 1
+- item 2
+- item 3
+
+Finally, you can make enumerated lists using numbers:
+
+1. item 1
+2. item 2
+3. item 3
