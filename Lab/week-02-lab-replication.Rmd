@@ -1,0 +1,87 @@
+---
+title: "Week-02 Lab Replication"
+output: html_notebook
+---
+
+## Introduction
+This notebook reproduces the code needed for Lab-02.
+
+## Dependencies
+This notebook has two dependencies - the data is drawn from the `testDriveR` package, and it uses functions from the `tidyverse` including `dplyr` and `ggplot2`.
+
+```{r}
+library(testDriveR)   # data
+library(tidyverse)    # tools for data cleaning and plotting
+```
+
+## Load Data
+First, we load the data from `testDriveR` into a data frame.
+
+```{r}
+cars <- auto17
+```
+
+## Part 1: Cleaning Data
+The following pipe of code contains functions for completing questions 1 through 5 - it filters cars produced by German automakers, the selects the variables needed, then renames the two requested variables, the creates a new logical variable for low fuel efficiency vehicles, and re-arranges the dataset based on average fuel efficiency.
+
+```{r}
+cars %>%
+  filter(mfrDivision == "Audi" | mfrDivision == "BMW" | mfrDivision == "Mercedes-Benz" |
+           mfrDivision == "Porsche" | mfrDivision == "Volkswagon") %>%
+  select(id, mfrDivision, carLine, combFE, guzzlerStr, displ) %>%
+  rename(brand = mfrDivision) %>%
+  rename(avgMpg = combFE) %>%
+  mutate(guzzler = ifelse(guzzlerStr == "G", TRUE, FALSE)) %>%
+  arrange(desc(avgMpg)) -> gerCars
+
+head(gerCars)
+```
+
+### 6. Most Fuel Efficient Car
+The most fuel efficient car among German 2017 model year vehicles is the BMW 328d, which gets 36 miles per gallon on average.
+
+### 7. Total Number of Cars for Sale
+There are a number of ways to get this information. You can look up in your Global Environment tab and note that there are 268 observations in the `gerCars` data frame. You can also use the following syntax to reproduce this programmatically:
+
+```{r}
+nrow(gerCars)
+```
+
+### 8. Gas Guzzlers
+```{r}
+table(gerCars$guzzler)
+```
+
+16 out of the 268 German cars are considered gas guzzling vehicles by the U.S. Department of Transportation.
+
+## Part 2: Plotting Data
+### 9. "Guzzler" Bar Plot
+```{r}
+ggplot(data = gerCars) +
+  geom_bar(mapping = aes(guzzler))
+```
+
+This plot highlights the fact that there are very few guzzler vehicles that are made by German auto manufacturers.
+
+### 10. Fuel Efficency
+```{r}
+ggplot(data = gerCars) +
+  geom_histogram(mapping = aes(avgMpg))
+```
+
+This plot shows the distribution within the average fuel efficiency variable. It does not look the best, since there is a large "canyon" running through the middle of the distribution. This is caused by the way the `ggplot()` function is "binning" our data - grouping observations into buckets for plotting purposes. We can adjust the number of bins with the `bin = val` option, as below:
+
+```{r}
+ggplot(data = gerCars) +
+  geom_histogram(mapping = aes(avgMpg), bins = 26)
+```
+
+Try playing with the number of bins when you make different scatter plots, and get a feel for how you can alter the presentation of an underlying distribution.
+
+### 11. Fuel Effiency and Engine Size
+```{r}
+ggplot(data = gerCars) +
+  geom_point(mapping = aes(x = avgMpg, y = displ, color = guzzler), position = "jitter")
+```
+
+This plot shows the relationship with engine size and fuel efficiency. As engine size decreases, fuel efficiency decreases. The gas guzzler vehicles are concentrate in the high displacement area of the plot, but interestingly, several vehicles with worse fuel efficiency are *not* identified as gas guzzlers by the U.S. Department of Transportation.
