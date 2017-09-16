@@ -1,4 +1,5 @@
-# Week-02
+Week-02 <img src="https://raw.githubusercontent.com/slu-soc5050/Core-Documents/sources/soc5050LogoSm_v2.png" align="right" />
+===========================================================
 
 ### Repository Contents
 This repository contains files for:
